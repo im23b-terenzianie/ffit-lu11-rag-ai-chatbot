@@ -26,11 +26,16 @@ dependencyManagement {
 
 dependencies {
     // Application
+    implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
+    implementation 'org.springframework.ai:spring-ai-starter-model-transformers'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     // Testing
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.mockito'
+    }
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 }

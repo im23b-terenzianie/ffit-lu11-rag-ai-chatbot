@@ -1,10 +1,23 @@
 spring:
   application:
     name: rag-ai-chatbot
+  ai:
+    transformers:
+      embedding:
+        enabled: true
+        model: "BAAI/bge-small-en"
+
+    vectorstore:
+      pgvector:
+        enabled: true
+        table-name: vector_store
+
+  datasource:
+    enabled: true
 
 logging:
   level:
-    root: INFO
+    root: WARN
     ch.bzz.rag: DEBUG
   file:
     name: app.log
