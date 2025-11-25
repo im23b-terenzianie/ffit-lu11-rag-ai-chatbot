@@ -1,7 +1,5 @@
 package ch.bzz.rag.service;
 
-import ch.bzz.rag.factory.DocumentFactory;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,25 +11,24 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class StoreServiceTest {
 
     private final StoreService storeService;
-    private final DocumentFactory docFac;
+    private final DocumentService documentService;
 
     @Test
     void testSaveAndSearch() {
         // Arrange
         List<Document> docs = new ArrayList<>();
-        docs.add(docFac.create("Hunde machen wau.", "https://de.wiktionary.org/wiki/wau"));
-        docs.add(docFac.create("Katzen machen miau.", "https://de.wiktionary.org/wiki/miau"));
-        docs.add(docFac.create("Kühe machen muh.", "https://de.wiktionary.org/wiki/muh"));
-        docs.add(docFac.create("Esel machen ia.", "https://de.wiktionary.org/wiki/ia"));
-        docs.add(docFac.create("Hähne machen kikeriki.", "https://de.wiktionary.org/wiki/kikeriki"));
-        docs.add(docFac.create("Ziegen machen mäh.", "https://de.wiktionary.org/wiki/m%C3%A4h"));
-        docs.add(docFac.create("Schafe machen mäh.", "https://de.wiktionary.org/wiki/m%C3%A4h"));
+        docs.add(documentService.createDocument("Hunde machen wau.", "https://de.wiktionary.org/wiki/wau"));
+        docs.add(documentService.createDocument("Katzen machen miau.", "https://de.wiktionary.org/wiki/miau"));
+        docs.add(documentService.createDocument("Kühe machen muh.", "https://de.wiktionary.org/wiki/muh"));
+        docs.add(documentService.createDocument("Esel machen ia.", "https://de.wiktionary.org/wiki/ia"));
+        docs.add(documentService.createDocument("Hähne machen kikeriki.", "https://de.wiktionary.org/wiki/kikeriki"));
+        docs.add(documentService.createDocument("Ziegen machen mäh.", "https://de.wiktionary.org/wiki/m%C3%A4h"));
+        docs.add(documentService.createDocument("Schafe machen mäh.", "https://de.wiktionary.org/wiki/m%C3%A4h"));
         storeService.save(docs);
 
         // Act
