@@ -19,9 +19,8 @@ public class StoreService {
     private final JdbcTemplate jdbcTemplate;
 
     public void save(List<Document> documents) {
-        log.info("Save {} documents in vector store", documents.size());
         vectorStore.add(documents);
-        updateIndex(); // Prevents nasty side effects of using an old index
+        log.debug("Saved {} documents into vector store", documents.size());
     }
 
     public List<Document> search(String query, int topK) {
@@ -40,12 +39,25 @@ public class StoreService {
         return documents;
     }
 
-
     public Integer count() {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM vector_store", Integer.class);
     }
 
-    private void updateIndex() {
+    public void updateIndex() {
         jdbcTemplate.execute("ANALYZE vector_store;");
+    }
+
+    public List<String> getSourcesForNamespace(String namespaceUrl) {
+        String sql = """
+            SELECT metadata->>'source' AS source
+            FROM vector_store
+            WHERE metadata->>'source' LIKE ?
+        """;
+
+        return jdbcTemplate.query(
+                sql,
+                ps -> ps.setString(1, namespaceUrl + "%"),
+                (rs, rowNum) -> rs.getString("source")
+        );
     }
 }
