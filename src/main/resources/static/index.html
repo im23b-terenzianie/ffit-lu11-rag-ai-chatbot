@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>rag-ai-chatbot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>rag-ai-chatbot</h1>
+
+<div class="tabs">
+  <button class="tab-button active" data-tab="chat">Chat</button>
+  <button class="tab-button" data-tab="crawler">Wiki-Crawler</button>
+</div>
+
+<div id="loading" class="loading hidden">
+  <div class="spinner"></div>
+  <span id="loading-text">Bitte warten...</span>
+</div>
+
+<div id="chat" class="tab-content active">
+  <div id="chat-log"></div>
+  <div class="chat-answer">
+    <div class="answer-text"></div>
+    <div class="answer-sources"></div>
+  </div>
+  <div class="chat-input">
+    <input id="chat-question" type="text" placeholder="Frage eingeben…" />
+    <button onclick="sendChat()">Senden</button>
+  </div>
+</div>
+
+<div id="crawler" class="tab-content">
+  <h2>Wiki-Crawler</h2>
+
+  <label>
+    Namespace URL:
+    <input id="namespaceUrl" type="text" value="https://wiki.bzz.ch/de/modul/ffit/3-jahr/java/">
+  </label>
+  <br/>
+
+  <label>
+    Regex-Filter:
+    <input id="regexFilter" type="text" value="^(?!.*\/start$).*">
+  </label>
+  <br/>
+
+  <label>
+    <input id="overwrite" type="checkbox">
+    Vorhandene Einträge überschreiben
+  </label>
+  <br/>
+
+  <button onclick="startCrawl()">Crawling starten</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
