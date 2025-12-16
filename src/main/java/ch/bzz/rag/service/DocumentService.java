@@ -1,15 +1,16 @@
 package ch.bzz.rag.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.document.Document;
-import org.springframework.stereotype.Service;
-
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import org.springframework.ai.document.Document;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -40,7 +41,17 @@ public class DocumentService {
         }
         List<String> result = new ArrayList<>();
 
-        // TODO: implement logic
+        int position = 0;
+        int textLength = text.length();
+        
+        while (position < textLength) {
+            int endPosition = Math.min(position + chunkSize, textLength);
+            String chunk = text.substring(position, endPosition);
+            result.add(chunk);
+            
+            // Move position forward by (chunkSize - overlap) for next chunk
+            position += chunkSize - overlap;
+        }
 
         log.debug("Created {} chunks with chunkSize {} and overlap {}", result.size(), chunkSize, overlap);
         return result;
