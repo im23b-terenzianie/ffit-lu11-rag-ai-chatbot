@@ -31,7 +31,8 @@ class ChatServiceTest {
         assertThat(answer.text()).contains("miau").contains("[DOC_1]");
         assertThat(answer.sources()).hasSize(1);
         SourceReference source = answer.sources().getFirst();
-        assertThat(source.id()).isEqualTo("DOC_1");
+        assertThat(source.docIds()).hasSize(1);
+        assertThat(source.docIds()).contains("DOC_1");
         assertThat(source.source()).contains("wiktionary.org/wiki/miau");
     }
 }
